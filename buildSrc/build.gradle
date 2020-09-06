@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    google()
+    jcenter()
+}
+
+dependencies {
+    implementation "com.android.tools.build:gradle:4.0.1"
+    implementation "org.javassist:javassist:3.27.0-GA"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.0"
+}

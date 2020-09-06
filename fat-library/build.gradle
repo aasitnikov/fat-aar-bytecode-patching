@@ -1,0 +1,40 @@
+import com.example.EmbedRClassesBytecodeTransformer
+
+plugins {
+    id 'com.android.library'
+    id "com.kezong.fat-aar"
+}
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+// Try uncomment this statement to see how app stops crashing
+//android.registerTransform(new EmbedRClassesBytecodeTransformer(
+//        ["com.example.mylibrary"], // list all embedded modules here
+//        "com.example.fatlibrary"
+//))
+
+tasks.register("publishAar", Copy) {
+    dependsOn "assembleDebug"
+    from file("$buildDir/outputs/aar/fat-library-debug.aar")
+    into projectDir
+}
+
+dependencies {
+    embed project(path: ':mylibrary', configuration: 'default')
+}
